@@ -3,12 +3,18 @@ import json
 
 def clean_data(rawdata):
     museums = []
+    pattern = re.compile(
+        r'\n(?=\d+[a-zA-Z]?\.\d+\n)'
+        r'(.*?)(?:\n(?:Facilities|Amenities):.*?)(?=\n\S|\Z)',
+        re.DOTALL | re.MULTILINE
+    )
 
-    museums_sections = re.split(r'\n(?=\d+[a-zA-Z]?\.\d+)', rawdata) #takes the raw data and splits into sections based on the starting character (digit,dot,digit)
-
+    museums_sections = pattern.findall(rawdata)
+    
     for i in museums_sections:
+        print("***************")
         print(i)
-        
+        print("***************")
 def main():
 
     with open(r"output\text.txt", "r", encoding="utf-8") as file:
