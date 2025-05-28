@@ -14,6 +14,16 @@ def clean_data(rawdata):
     for i in museums_sections:
         lines = i.splitlines()
         museums.append(lines[1:])
+    jsonify(museums)
+
+
+def jsonify(museums):
+    for section in museums:
+        print("**********************")
+        for line in section:
+            print(line)
+            split = line.split(":", 1)
+            print(split)
 
 def main():
 
