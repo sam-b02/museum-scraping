@@ -12,9 +12,9 @@ def clean_data(rawdata):
     museums_sections = pattern.findall(rawdata)
     
     for i in museums_sections:
-        print("***************")
-        print(i)
-        print("***************")
+        lines = i.splitlines()
+        museums.append(lines[1:])
+
 def main():
 
     with open(r"output\text.txt", "r", encoding="utf-8") as file:
