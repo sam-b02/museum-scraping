@@ -1,5 +1,6 @@
 import re
 import json
+import os
 
 def clean_data(rawdata):
     museums = []
@@ -11,19 +12,47 @@ def clean_data(rawdata):
 
     museums_sections = pattern.findall(rawdata)
     
-    for i in museums_sections:
-        lines = i.splitlines()
-        museums.append(lines[1:])
+    for sections in museums_sections:
+        lines = sections.splitlines()
+
+        clean_sections = []
+
+        for i in range(1, len(lines)):
+            if lines[i] != " ":
+                if ":" not in lines[i]:
+                    clean_sections[-1] += lines[i]
+                else:
+                    clean_sections.append(lines[i]) 
+
+        museums.append(clean_sections)
+
     jsonify(museums)
 
-
 def jsonify(museums):
+    
+    count = 0
+    json_data = {}
+
     for section in museums:
-        print("**********************")
+
+        temp_json = {}
+
         for line in section:
-            print(line)
+
             split = line.split(":", 1)
-            print(split)
+            
+            temp_json[split[0].strip().lower()] = split[1].strip().lower()
+
+        count += 1
+        print(count)
+        json_data[str(count)] = temp_json
+        
+    with open(r"output\output.json", "w", encoding="utf-8") as json_file:
+        json.dump(json_data, json_file, indent=4, ensure_ascii=False)
+    print(f"JSON data successfully dumped")
+
+        
+
 
 def main():
 
