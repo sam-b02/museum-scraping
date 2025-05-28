@@ -1,6 +1,7 @@
 import re
 import json
-import os
+
+#this is used for cleaning up the data and jsonifying it
 
 def clean_data(rawdata):
     museums = []

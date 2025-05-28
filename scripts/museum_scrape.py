@@ -1,6 +1,8 @@
 import pymupdf
 
-doc = pymupdf.open(r"data\museums.pdf") # open a document
+#this is a document to scrape the raw text from the pdf and dump it into a text file
+
+doc = pymupdf.open(r"data\museums.pdf")
 
 out = open(r"output\text.txt", "wb") 
 for x, page in enumerate(doc):
