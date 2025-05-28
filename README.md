@@ -5,5 +5,4 @@ a tiny pipeline to build a structured dataset of all museums in india (from an 8
 
 installation
 
-python -m venv venv
-venv\Scripts\activate.bat
+pip install pymupdf
