@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Museum Directory</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Philosophy: Enduring Value, Not Transient Trends */
+        body {
+            font-family: 'Roboto', sans-serif; /* A clear, workhorse sans-serif */
+            margin: 2em auto; /* Centering content with comfortable margins */
+            max-width: 1000px; /* A sensible maximum width for readability */
+            background: #F8F8F8; /* A very subtle off-white for depth */
+            color: #333; /* Standard, strong text color */
+            line-height: 1.6; /* Enhanced readability */
+            font-size: 1.05em; /* Slightly larger base font for gravitas */
+        }
+
+        h1 {
+            text-align: center;
+            color: #2C3E50; /* A deep, serious blue-grey */
+            font-family: 'Merriweather', serif; /* A classic serif for titles */
+            font-weight: 700; /* Bold and commanding */
+            margin-bottom: 1.5em;
+            font-size: 2.5em; /* Prominent heading */
+            letter-spacing: -0.02em; /* Subtle tightening */
+        }
+
+        /* The Search Apparatus: Robust and Reliable */
+        .filters-container {
+            padding: 2em; /* More breathing room */
+            background-color: #FFFFFF; /* Pure white, denoting transparency */
+            border-radius: 6px; /* Slightly less rounded, more traditional */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08); /* A more substantial, but still subtle shadow */
+            margin-bottom: 3em; /* Greater separation from results */
+            border-top: 4px solid #0056B3; /* A distinguished accent line */
+        }
+
+        .filter-group {
+            margin-bottom: 1.5em; /* Increased spacing between filter groups */
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.6em; /* A bit more space below labels */
+            font-weight: 700; /* Strongly bold for clarity */
+            color: #444; /* Darker grey for labels */
+            font-size: 1.05em;
+        }
+
+        .filters-container input[type="text"],
+        .filters-container select {
+            width: 100%; /* Ensure full width within its grid column */
+            padding: 0.9em 12px; /* Generous padding for input fields */
+            border: 1px solid #C0C0C0; /* A soft, neutral grey border */
+            border-radius: 4px;
+            font-size: 1em;
+            box-sizing: border-box;
+            color: #333;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Smooth transitions */
+        }
+
+        .filters-container input[type="text"]:focus,
+        .filters-container select:focus {
+            border-color: #007BFF; /* A focused blue on interaction */
+            box-shadow: 0 0 0 2px rgba(0,123,255,0.2); /* Gentle glow, not distracting */
+            outline: none; /* Remove default outline */
+        }
+
+        .match-type-options {
+            display: flex;
+            gap: 1.5em; /* More space between radio options */
+            align-items: center;
+            margin-top: 0.7em; /* Consistent spacing */
+        }
+
+        .match-type-options label {
+            font-weight: 400; /* Normal weight for radio button labels */
+            margin-bottom: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4em; /* Space between radio and text */
+            color: #555; /* Slightly lighter text for options */
+            font-size: 0.95em;
+        }
+
+        .match-type-options input[type="radio"] {
+            -webkit-appearance: none; /* Custom radio buttons */
+            -moz-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #999;
+            border-radius: 50%;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            transition: border-color 0.2s ease;
+        }
+
+        .match-type-options input[type="radio"]:checked {
+            border-color: #0056B3; /* Darker blue when checked */
+        }
+
+        .match-type-options input[type="radio"]:checked::before {
+            content: '';
+            display: block;
+            width: 10px;
+            height: 10px;
+            background: #0056B3; /* Solid blue dot */
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Responsive Grid: Adaptable for Diverse Needs */
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Slightly wider min-width */
+            gap: 1.8em; /* Increased gap for clarity */
+        }
+
+
+        /* Museum Listings: Each a Valued Asset */
+        .museum {
+            background: #FFFFFF;
+            margin: 1.5em 0; /* More vertical separation */
+            padding: 2em; /* Generous internal padding */
+            border: 1px solid #E0E0E0; /* Lighter border for separation */
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); /* A bit more pronounced, but still soft */
+            transition: box-shadow 0.3s ease, transform 0.2s ease; /* Subtle lift on hover */
+        }
+
+        .museum:hover {
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1); /* More significant shadow on hover */
+            transform: translateY(-3px); /* Gentle upward lift */
+        }
+
+        .museum h2 {
+            margin-top: 0;
+            margin-bottom: 0.7em;
+            color: #0056B3; /* A deep, trustworthy blue */
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            font-size: 1.8em; /* Clear museum name */
+        }
+
+        .museum p {
+            margin: 0.6em 0; /* Consistent paragraph spacing */
+            color: #444; /* Slightly softer text color for details */
+        }
+
+        .museum strong {
+            color: #2C3E50; /* Stronger accent for labels */
+            font-weight: 700;
+        }
+
+        .museum a {
+            color: #007BFF; /* Standard link blue */
+            text-decoration: none; /* Clean links */
+            transition: color 0.2s ease;
+        }
+
+        .museum a:hover {
+            text-decoration: underline; /* Underline on hover for clear interaction */
+            color: #0056B3; /* Darker blue on hover */
+        }
+
+        /* Messaging: Clear and Concise */
+        #results p.no-results,
+        #loadingMessage {
+            text-align: center;
+            font-size: 1.25em; /* More prominent messages */
+            color: #7F8C8D; /* A calm, reassuring grey */
+            padding: 2em; /* More breathing room */
+            font-weight: 400;
+        }
+
+        #loadingMessage {
+            color: #0056B3; /* Loading message in primary blue */
+            font-weight: 700;
+        }
+
+        /* Smaller Screens - Ensuring Legibility on All Holdings */
+        @media (max-width: 768px) {
+            body {
+                margin: 1.5em;
+                font-size: 1em;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .filters-container {
+                padding: 1.5em;
+            }
+            .filter-grid {
+                grid-template-columns: 1fr; /* Stack columns on smaller screens */
+            }
+            .museum {
+                padding: 1.5em;
+            }
+            .museum h2 {
+                font-size: 1.5em;
+            }
+            #results p.no-results,
+            #loadingMessage {
+                font-size: 1.1em;
+                padding: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Museum Directory</h1>
+
+    <div class="filters-container">
+        <div class="filter-grid">
+            <div class="filter-group">
+                <label for="searchName">Search by Name:</label>
+                <input type="text" id="searchName" placeholder="e.g., National Museum">
+            </div>
+
+            <div class="filter-group">
+                <label for="searchState">Filter by State/UT:</label>
+                <select id="searchState">
+                    <option value="">All States/UTs</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="searchTheme">Filter by Theme:</label>
+                <select id="searchTheme">
+                    <option value="">All Themes</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="searchOwnership">Search by Ownership:</label>
+                <input type="text" id="searchOwnership" placeholder="e.g., Government, Private">
+            </div>
+
+            <div class="filter-group">
+                <label for="searchOverview">Search in Overview (comma-separated):</label>
+                <input type="text" id="searchOverview" placeholder="e.g., artifacts, independence" style="flex-grow: 1;">
+                <div class="match-type-options" style="margin-top: 0.5em;">
+                    <label><input type="radio" name="overviewMatch" value="any" checked> Match Any Word</label>
+                    <label><input type="radio" name="overviewMatch" value="all"> Match All Words</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loadingMessage">Loading museum data... Awaiting valuable insights...</div>
+    <div id="results"></div>
+
+    <script>
+        let allMuseumsArray = []; // Keep a pristine copy of all museums
+
+        // Debounce function: Ensures efficiency in data processing
+        function debounce(func, delay) {
+            let timeoutId;
+            return function(...args) {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => {
+                    func.apply(this, args);
+                }, delay);
+            };
+        }
+
+        async function loadData() {
+            const loadingMessage = document.getElementById('loadingMessage');
+            try {
+                // IMPORTANT: Adjust the path to your output.json file if necessary.
+                // Consistent with sound financial practice, verify your data source.
+                const response = await fetch('output/output.json');
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}. Data acquisition failed.`);
+                }
+                const museumsData = await response.json();
+                allMuseumsArray = Object.values(museumsData);
+
+                populateStateDropdown();
+                populateThemeDropdown();
+                renderResults(allMuseumsArray); // Display all museums initially, a full disclosure approach
+                loadingMessage.style.display = 'none';
+            } catch (error) {
+                console.error("Failed to load museum data:", error);
+                loadingMessage.textContent = 'Failed to load museum data. Prudent action suggests trying again later, or verifying data integrity.';
+                document.getElementById('results').innerHTML = '<p class="no-results">Could not load museum information. This situation warrants further investigation.</p>';
+            }
+        }
+
+        function populateStateDropdown() {
+            const stateDropdown = document.getElementById('searchState');
+            const states = new Set();
+            allMuseumsArray.forEach(m => {
+                if (m["state/ut"] && m["state/ut"].trim()) {
+                    states.add(m["state/ut"].trim());
+                }
+            });
+            const sortedStates = Array.from(states).sort();
+            sortedStates.forEach(state => {
+                const option = document.createElement('option');
+                option.value = state.toLowerCase();
+                option.textContent = state;
+                stateDropdown.appendChild(option);
+            });
+        }
+
+        function populateThemeDropdown() {
+            const themeDropdown = document.getElementById('searchTheme');
+            const themes = new Set();
+            allMuseumsArray.forEach(m => {
+                if (m.theme && m.theme.trim()) {
+                    m.theme.split(',').forEach(theme => {
+                        const trimmedTheme = theme.trim();
+                        if (trimmedTheme) {
+                            themes.add(trimmedTheme);
+                        }
+                    });
+                }
+            });
+            const sortedThemes = Array.from(themes).sort();
+            sortedThemes.forEach(theme => {
+                const option = document.createElement('option');
+                option.value = theme.toLowerCase();
+                option.textContent = theme;
+                themeDropdown.appendChild(option);
+            });
+        }
+
+        function renderResults(data) {
+            const container = document.getElementById('results');
+            container.innerHTML = '';
+
+            if (data.length === 0) {
+                container.innerHTML = '<p class="no-results">No museums found matching your criteria. A clear outcome, even if unexpected.</p>';
+                return;
+            }
+
+            const fragment = document.createDocumentFragment();
+            data.forEach(m => {
+                const div = document.createElement('div');
+                div.className = 'museum';
+                div.innerHTML = `
+                    <h2>${m.name || 'N/A (Name Undisclosed)'}</h2>
+                    <p><strong>Address:</strong> ${m.address || 'N/A'}</p>
+                    <p><strong>State/UT:</strong> ${m["state/ut"] || 'N/A'}</p>
+                    <p><strong>Year of Establishment:</strong> ${m["year of establishment"] || 'N/A'}</p>
+                    <p><strong>Theme:</strong> ${m.theme || 'N/A'}</p>
+                    <p><strong>Ownership:</strong> ${m.ownership || 'N/A'}</p>
+                    <p><strong>Overview:</strong> ${m.overview || 'N/A'}</p>
+                    <p><strong>Contact:</strong> ${m.contact || 'N/A'}</p>
+                    <p><strong>Admission:</strong> ${m.admission || 'N/A'}</p>
+                    <p><strong>Timings:</strong> ${m.timings || 'N/A'}</p>
+                    <p><strong>Website:</strong> ${m.website ? `<a href="${m.website.startsWith('http') ? m.website : 'http://' + m.website}" target="_blank" rel="noopener noreferrer">${m.website}</a>` : 'N/A (No Public Access)'}</p>
+                `;
+                fragment.appendChild(div);
+            });
+            container.appendChild(fragment);
+        }
+
+        function filterResults() {
+            const nameFilter = document.getElementById('searchName').value.toLowerCase();
+            const stateFilter = document.getElementById('searchState').value.toLowerCase();
+            const themeFilter = document.getElementById('searchTheme').value.toLowerCase();
+            const ownershipFilter = document.getElementById('searchOwnership').value.toLowerCase();
+
+            // Overview search: Precision and breadth of coverage
+            const overviewSearchString = document.getElementById('searchOverview').value.toLowerCase();
+            const overviewKeywords = overviewSearchString.split(',')
+                                                    .map(k => k.trim())
+                                                    .filter(k => k.length > 0);
+            const overviewMatchType = document.querySelector('input[name="overviewMatch"]:checked').value;
+
+            const filtered = allMuseumsArray.filter(m => {
+                const nameMatch = !nameFilter || (m.name && m.name.toLowerCase().includes(nameFilter));
+                const stateMatch = !stateFilter || (m["state/ut"] && m["state/ut"].toLowerCase().includes(stateFilter));
+                const ownershipMatch = !ownershipFilter || (m.ownership && m.ownership.toLowerCase().includes(ownershipFilter));
+                const themeMatch = !themeFilter || (m.theme && m.theme.toLowerCase().includes(themeFilter));
+
+                let overviewMatchResult = true;
+                if (overviewKeywords.length > 0) {
+                    if (!m.overview) {
+                        overviewMatchResult = false;
+                    } else {
+                        const museumOverviewLower = m.overview.toLowerCase();
+                        if (overviewMatchType === 'any') { // Match Any: Broader inclusion
+                            overviewMatchResult = overviewKeywords.some(keyword => museumOverviewLower.includes(keyword));
+                        } else { // Match All: Exacting criteria
+                            overviewMatchResult = overviewKeywords.every(keyword => museumOverviewLower.includes(keyword));
+                        }
+                    }
+                }
+                return nameMatch && stateMatch && themeMatch && ownershipMatch && overviewMatchResult;
+            });
+            renderResults(filtered);
+        }
+
+        // Debounced version of filterResults for text inputs: A measured approach to updates
+        const debouncedFilterResults = debounce(filterResults, 350);
+
+        // Event Listeners: Ensuring timely response to user directives
+        document.getElementById('searchName').addEventListener('input', debouncedFilterResults);
+        document.getElementById('searchState').addEventListener('change', filterResults);
+        document.getElementById('searchTheme').addEventListener('change', filterResults);
+        document.getElementById('searchOwnership').addEventListener('input', debouncedFilterResults);
+        document.getElementById('searchOverview').addEventListener('input', debouncedFilterResults);
+        document.querySelectorAll('input[name="overviewMatch"]').forEach(radio => {
+            radio.addEventListener('change', filterResults);
+        });
+
+        // Initial load: Commencing operations with full data
+        loadData();
+    </script>
+</body>
+</html>
