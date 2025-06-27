@@ -1,19 +1,19 @@
 # museum-scraping
 
-a tiny pipeline to build a structured dataset of all museums in india, w/ automated requested review scraping via google maps.
+This is a project for scraping google maps reviews of Indian museums. It contains the pipeline through which this was achieved.
 
-additionally, a small webapp to search and filter the data 
+If you wish to just use the google maps review scraper, all it needs is a maps url and a file name to be passed to it and it will do the rest. 
 
-## Data Source
+## installation
 
-Based on the official [Directory of Indian Museums](https://bitm.gov.in/wp-content/uploads/2023/06/Directory_of_Indian_Museums_08062023.pdf).
+you need python installed
 
-## Installation
+git clone https://github.com/sam-b02/museum-scraping
 
-git clone https://github.com/sam-b02/museum-scraping / download as zip
+cd museum-scraping
 
-open folder
+pip install -r requirements.txt
 
-open "index.html" in a browser
+run app.py and go to http://127.0.0.1:5000/ in a web browser.
 
-(note: if you find themes have been reduced too much, you can reset it by simply running scrape.py again.)
+filter websites, add to staging and SCROLL DOWN to see them staged. click the perform action button to scrape. you can see how many reviews have been scraped in the ide that app.py was run.

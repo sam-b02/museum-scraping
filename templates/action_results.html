@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Action Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+        h1 { color: #333; }
+        ul { list-style-type: none; padding: 0; }
+        li { background-color: #fff; border: 1px solid #ddd; padding: 10px; margin-bottom: 5px; border-radius: 4px; }
+        .success { color: green; }
+        .info { color: blue; }
+        .error { color: red; }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Action Results on Staged Museums</h1>
+    
+    {% if action_details %}
+        <ul>
+            {% for detail in action_details %}
+                <li>{{ detail }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No action performed or no museums were in the staging area.</p>
+    {% endif %}
+
+    <p><a href="{{ url_for('index') }}"><button>Back to Museum Explorer</button></a></p>
+</body>
+</html>
