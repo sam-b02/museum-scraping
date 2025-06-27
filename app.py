@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 import json
 import os
-import re # For regular expressions to sanitize filenames
-from scripts import scraper # Import your scraper module
+import re
+from scripts import scraper 
+from dotenv import load_dotenv
 
+load_dotenv()
 app = Flask(__name__)
-app.secret_key = 'your_super_secret_key'  # IMPORTANT: Replace with a strong, random key for production
+app.secret_key = os.getenv("key") #replace with whatever
 
 # --- Helper Functions ---
 
