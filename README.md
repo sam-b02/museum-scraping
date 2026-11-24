@@ -13,7 +13,6 @@ A complete end‑to‑end pipeline for extracting Google Maps reviews of India
    ├─ scraper.py           # Scrape reviews (supports async mode)
    ├─ museum_clean.py      # Basic cleaning of raw HTML
    ├─ final_clean.py       # Final data tidy‑up
-   ├─ nlp_process.py       # Simple NLP tagging
    └─ ...
 📁 templates/       # HTML templates for rendering results
 📁 .env              # Store API keys (never commit)
@@ -31,10 +30,6 @@ A complete end‑to‑end pipeline for extracting Google Maps reviews of India
 3. Install dependencies:
    ```bash
    pip install -r requirements.txt
-   ```
-4. Create a `.env` file with your Google Maps API key:
-   ```text
-   GOOGLE_MAPS_API_KEY=<your-key>
    ```
 
 ## Quick Start
