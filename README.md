@@ -31,10 +31,6 @@ A complete end‑to‑end pipeline for extracting Google Maps reviews of India
    ```bash
    pip install -r requirements.txt
    ```
-4. Create a `.env` file with your Google Maps API key:
-   ```text
-   GOOGLE_MAPS_API_KEY=<your-key>
-   ```
 
 ## Quick Start
 Run the full pipeline with a series of commands (adjust paths as needed):
